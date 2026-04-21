@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Student Database Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Student Database Client</h1>
+</header>
+
+<main>
+
+    <!-- ───────────── CREATE ───────────── -->
+    <section id="create-student">
+        <h2>Create a Student</h2>
+        <div class="form-group">
+            <input type="text"  id="create-first"  placeholder="First Name">
+            <input type="text"  id="create-last"   placeholder="Last Name">
+            <input type="email" id="create-email"  placeholder="Email">
+            <input type="text"  id="create-major"  placeholder="Major">
+            <select id="create-classification">
+                <option value="">-- Classification --</option>
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+            </select>
+            <button onclick="createStudent()">Add Student</button>
+        </div>
+        <p id="create-message" class="message"></p>
+    </section>
+
+    <!-- ───────────── VIEW ALL ───────────── -->
+    <section id="view-all-students">
+        <h2>All Students</h2>
+        <button onclick="getAllStudents()">Load All Students</button>
+        <div id="all-students-output"></div>
+    </section>
+
+    <!-- ───────────── VIEW ONE ───────────── -->
+    <section id="view-one-student">
+        <h2>View Student by ID</h2>
+        <div class="form-group">
+            <input type="number" id="view-id" placeholder="Student ID">
+            <button onclick="getStudentById()">Search</button>
+        </div>
+        <div id="one-student-output"></div>
+    </section>
+
+    <!-- ───────────── UPDATE ───────────── -->
+    <section id="update-student">
+        <h2>Update a Student</h2>
+        <div class="form-group">
+            <input type="number" id="update-id"             placeholder="Student ID (to update)">
+            <input type="text"   id="update-first"          placeholder="First Name">
+            <input type="text"   id="update-last"           placeholder="Last Name">
+            <input type="email"  id="update-email"          placeholder="Email">
+            <input type="text"   id="update-major"          placeholder="Major">
+            <select id="update-classification">
+                <option value="">-- Classification --</option>
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+            </select>
+            <button onclick="updateStudent()">Update Student</button>
+        </div>
+        <p id="update-message" class="message"></p>
+    </section>
+
+    <!-- ───────────── DELETE ───────────── -->
+    <section id="delete-student">
+        <h2>Delete a Student</h2>
+        <div class="form-group">
+            <input type="number" id="delete-id" placeholder="Student ID">
+            <button class="btn-delete" onclick="deleteStudent()">Delete Student</button>
+        </div>
+        <p id="delete-message" class="message"></p>
+    </section>
+
+</main>
+
+<footer>
+    <p>CS325 Full-Stack Project — Client App</p>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>
