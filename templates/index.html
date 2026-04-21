@@ -1,0 +1,161 @@
+{# templates/index.html #}
+{# Gozel Muradova - Extends base.html (template inheritance) #}
+{# All 5 required CRUD sections, Jinja loop, Jinja conditionals #}
+{% extends 'base.html' %}
+
+{% block title %}Student Database - Home{% endblock %}
+
+{% block content %}
+
+<!-- SECTION 1: Create a Student
+     Gozel - form POSTs to the /create Flask route -->
+<section id="create-student">
+    <h2>Create a Student</h2>
+    <form action="/create" method="POST">
+        <label for="c_first">First Name</label>
+        <input id="c_first" type="text" name="first_name" placeholder="Jane" required />
+
+        <label for="c_last">Last Name</label>
+        <input id="c_last" type="text" name="last_name" placeholder="Doe" required />
+
+        <label for="c_email">Email</label>
+        <input id="c_email" type="email" name="email" placeholder="jane@university.edu" required />
+
+        <label for="c_major">Major</label>
+        <input id="c_major" type="text" name="major" placeholder="Computer Science" required />
+
+        <label for="c_class">Classification</label>
+        <select id="c_class" name="classification" required>
+            <option value="" disabled selected>-- Select --</option>
+            <option value="Freshman">Freshman</option>
+            <option value="Sophomore">Sophomore</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+            <option value="Graduate">Graduate</option>
+        </select>
+
+        <button type="submit">Add Student</button>
+    </form>
+</section>
+
+<!-- 
+     SECTION 2: View All Students
+     G - Jinja loop renders one row per student
+             Jinja conditional handles empty state -->
+<section id="view-all-students">
+    <h2>All Students</h2>
+
+    {% if students %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Major</th>
+                    <th>Classification</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student['id'] }}</td>
+                    <td>{{ student['first_name'] }}</td>
+                    <td>{{ student['last_name'] }}</td>
+                    <td>{{ student['email'] }}</td>
+                    <td>{{ student['major'] }}</td>
+                    <td>{{ student['classification'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="empty-msg">No students in the database yet.</p>
+    {% endif %}
+</section>
+
+<!-- SECTION 3: View One Student by ID
+     Gozel - GET form, result shown conditionally below  -->
+<section id="view-one-student">
+    <h2>View Student by ID</h2>
+    <form action="/view" method="GET">
+        <label for="v_id">Student ID</label>
+        <input id="v_id" type="number" name="student_id"
+               value="{{ view_id if view_id else '' }}"
+               placeholder="e.g. 1" min="1" required />
+        <button type="submit">Look Up</button>
+    </form>
+
+    {% if view_error %}
+        <p class="error-msg">{{ view_error }}</p>
+    {% elif viewed_student %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th><th>First</th><th>Last</th>
+                    <th>Email</th><th>Major</th><th>Classification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ viewed_student['id'] }}</td>
+                    <td>{{ viewed_student['first_name'] }}</td>
+                    <td>{{ viewed_student['last_name'] }}</td>
+                    <td>{{ viewed_student['email'] }}</td>
+                    <td>{{ viewed_student['major'] }}</td>
+                    <td>{{ viewed_student['classification'] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %}
+</section>
+
+<!-- 
+     SECTION 4: Update a Student
+     Gozel - form POSTs to the /update Flask route-->
+<section id="update-student">
+    <h2>Update a Student</h2>
+    <form action="/update" method="POST">
+        <label for="u_id">Student ID to Update</label>
+        <input id="u_id" type="number" name="student_id" placeholder="e.g. 1" min="1" required />
+
+        <label for="u_first">New First Name</label>
+        <input id="u_first" type="text" name="first_name" placeholder="Jane" required />
+
+        <label for="u_last">New Last Name</label>
+        <input id="u_last" type="text" name="last_name" placeholder="Doe" required />
+
+        <label for="u_email">New Email</label>
+        <input id="u_email" type="email" name="email" placeholder="jane@university.edu" required />
+
+        <label for="u_major">New Major</label>
+        <input id="u_major" type="text" name="major" placeholder="Computer Science" required />
+
+        <label for="u_class">New Classification</label>
+        <select id="u_class" name="classification" required>
+            <option value="" disabled selected>-- Select --</option>
+            <option value="Freshman">Freshman</option>
+            <option value="Sophomore">Sophomore</option>
+            <option value="Junior">Junior</option>
+            <option value="Senior">Senior</option>
+            <option value="Graduate">Graduate</option>
+        </select>
+
+        <button type="submit">Update Student</button>
+    </form>
+</section>
+
+<!-- 
+     SECTION 5: Delete a Student
+     Gozel - form POSTs to the /delete Flask route -->
+<section id="delete-student">
+    <h2>Delete a Student</h2>
+    <form action="/delete" method="POST">
+        <label for="d_id">Student ID to Delete</label>
+        <input id="d_id" type="number" name="student_id" placeholder="e.g. 1" min="1" required />
+        <button type="submit">Delete Student</button>
+    </form>
+</section>
+
+{% endblock %}

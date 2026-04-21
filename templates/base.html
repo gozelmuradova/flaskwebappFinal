@@ -1,0 +1,28 @@
+{# templates/base.html #}
+{# Gozel Muradova - Base template #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Student Database{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+<body>
+
+    <header>
+        <h1>Student Database</h1>
+        <p>CS325 Full-Stack Project</p>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>CS325 - Flask Student Database App</p>
+    </footer>
+
+</body>
+</html>
