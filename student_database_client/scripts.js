@@ -4,7 +4,7 @@ function buildTable(students) {
     if (students.length === 0) {
         return '<p>No students found.</p>';
     }
-
+//build HTML table from student data
     let rows = students.map(s => `
         <tr>
             <td>${s.id}</td>
@@ -34,14 +34,14 @@ function buildTable(students) {
 }
 
 
-
+//show success or error message
 function showMessage(elementId, text, isError = false) {
     const el = document.getElementById(elementId);
     el.textContent = text;
     el.className = isError ? 'message error' : 'message success';
 }
 
-
+// Mahin - get all students in the table 
 async function getAllStudents() {
     const output = document.getElementById('all-students-output');
     output.innerHTML = '<p>Loading...</p>';
@@ -55,10 +55,12 @@ async function getAllStudents() {
     }
 }
 
+//Mahin - get stududent by id.
 async function getStudentById() {
     const id     = document.getElementById('view-id').value.trim();
     const output = document.getElementById('one-student-output');
 
+    //if id is there 
     if (!id) {
         output.innerHTML = '<p class="error">Please enter a student ID.</p>';
         return;
@@ -67,7 +69,7 @@ async function getStudentById() {
     output.innerHTML = '<p>Loading...</p>';
 
     try {
-        const response = await fetch(`${API_BASE}/api/students/${id}`);
+        const response = await fetch(`${API_BASE}/api/students/${id}`); //fecth api by id
         const data     = await response.json();
 
         if (!response.ok) {
@@ -76,7 +78,7 @@ async function getStudentById() {
         }
 
         output.innerHTML = buildTable([data]);
-    } catch (error) {
+    } catch (error) { // if there is erroe it will show the error message
         output.innerHTML = '<p class="error">Request failed. Is the server running?</p>';
     }
 }
@@ -91,7 +93,7 @@ async function createStudent() {
         classification: document.getElementById('create-classification').value,
     };
 
-    // Basic client-side validation
+    // check if all fields are filled
     if (Object.values(body).some(v => !v)) {
         showMessage('create-message', 'Please fill in all fields.', true);
         return;
@@ -113,7 +115,7 @@ async function createStudent() {
 
         showMessage('create-message', 'Student created successfully!');
 
-        // Clear form inputs
+        // clear form fields
         ['create-first', 'create-last', 'create-email', 'create-major'].forEach(id => {
             document.getElementById(id).value = '';
         });
@@ -124,6 +126,7 @@ async function createStudent() {
     }
 }
 
+//update student by id
 async function updateStudent() {
     const id   = document.getElementById('update-id').value.trim();
     const body = {
@@ -134,7 +137,7 @@ async function updateStudent() {
         classification: document.getElementById('update-classification').value,
     };
 
-    if (!id) {
+    if (!id) { // check if id is provided
         showMessage('update-message', 'Please enter a student ID.', true);
         return;
     }
@@ -144,7 +147,7 @@ async function updateStudent() {
         return;
     }
 
-    try {
+    try {// send PUT request to update student
         const response = await fetch(`${API_BASE}/api/students/${id}`, {
             method:  'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -153,7 +156,7 @@ async function updateStudent() {
 
         const data = await response.json();
 
-        if (!response.ok) {
+        if (!response.ok) { // if response is not ok show error message
             showMessage('update-message', data.error, true);
             return;
         }
@@ -165,6 +168,7 @@ async function updateStudent() {
     }
 }
 
+//delete student by id
 async function deleteStudent() {
     const id = document.getElementById('delete-id').value.trim();
 
@@ -173,7 +177,7 @@ async function deleteStudent() {
         return;
     }
 
-    try {
+    try { // send DELETE request to delete student
         const response = await fetch(`${API_BASE}/api/students/${id}`, {
             method: 'DELETE',
         });
