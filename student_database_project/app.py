@@ -2,17 +2,15 @@
 # Gozel Muradova - Flask routes, template rendering, form handling
 
 from flask import Flask, render_template, request, redirect, url_for
+from flask_cors import CORS
+from api.routes import api_blueprint
 import db
 
 app = Flask(__name__)
 
+CORS(app)
 db.initialize_db()
-
-# M will uncomment these wlater hen api/api.py is ready
-# from flask_cors import CORS
-# from API.api import api_blueprint
-# CORS(app)
-# app.register_blueprint(api_blueprint, url_prefix='/api')
+app.register_blueprint(api_blueprint, url_prefix='/api')
 
 
 # Flask Web Application Routes
@@ -20,7 +18,6 @@ db.initialize_db()
 
 @app.route('/')
 def index():
-    # Fetch all students and pass them to the template
     students = db.get_all_students()
     return render_template('index.html', students=students)
 
