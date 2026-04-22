@@ -1,14 +1,5 @@
-// ─────────────────────────────────────────────────────────
-//  IMPORTANT: Replace this URL with your PythonAnywhere URL
-//  once your Flask app is deployed.
-//  Example: 'https://yourusername.pythonanywhere.com'
-// ─────────────────────────────────────────────────────────
-const API_BASE = 'http://127.0.0.1:5000';
+const API_BASE = 'https://gozelMuradova.pythonanywhere.com';
 
-
-// ─────────────────────────────────────────────────────────
-//  Helper: build an HTML table from an array of students
-// ─────────────────────────────────────────────────────────
 function buildTable(students) {
     if (students.length === 0) {
         return '<p>No students found.</p>';
@@ -43,9 +34,7 @@ function buildTable(students) {
 }
 
 
-// ─────────────────────────────────────────────────────────
-//  Helper: show a status message in a paragraph element
-// ─────────────────────────────────────────────────────────
+
 function showMessage(elementId, text, isError = false) {
     const el = document.getElementById(elementId);
     el.textContent = text;
@@ -53,9 +42,6 @@ function showMessage(elementId, text, isError = false) {
 }
 
 
-// ─────────────────────────────────────────────────────────
-//  GET /api/students — fetch and display all students
-// ─────────────────────────────────────────────────────────
 async function getAllStudents() {
     const output = document.getElementById('all-students-output');
     output.innerHTML = '<p>Loading...</p>';
@@ -69,10 +55,6 @@ async function getAllStudents() {
     }
 }
 
-
-// ─────────────────────────────────────────────────────────
-//  GET /api/students/<id> — fetch one student by ID
-// ─────────────────────────────────────────────────────────
 async function getStudentById() {
     const id     = document.getElementById('view-id').value.trim();
     const output = document.getElementById('one-student-output');
@@ -100,9 +82,6 @@ async function getStudentById() {
 }
 
 
-// ─────────────────────────────────────────────────────────
-//  POST /api/students — create a new student
-// ─────────────────────────────────────────────────────────
 async function createStudent() {
     const body = {
         first_name:     document.getElementById('create-first').value.trim(),
@@ -145,10 +124,6 @@ async function createStudent() {
     }
 }
 
-
-// ─────────────────────────────────────────────────────────
-//  PUT /api/students/<id> — update an existing student
-// ─────────────────────────────────────────────────────────
 async function updateStudent() {
     const id   = document.getElementById('update-id').value.trim();
     const body = {
@@ -190,10 +165,6 @@ async function updateStudent() {
     }
 }
 
-
-// ─────────────────────────────────────────────────────────
-//  DELETE /api/students/<id> — delete a student
-// ─────────────────────────────────────────────────────────
 async function deleteStudent() {
     const id = document.getElementById('delete-id').value.trim();
 
